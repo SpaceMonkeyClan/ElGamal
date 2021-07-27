@@ -1,5 +1,9 @@
 # CS4600 - El Gamal Encryption/Decryption Tool
 
+System Specs:
+Python Version 3.9.6
+pip install pycryptodome
+
 Public and private keys are composed of 3 elements each:
 
 - Kpub = (p, alfa, B)
