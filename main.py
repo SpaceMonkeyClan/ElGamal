@@ -30,11 +30,11 @@ def get_args():
 def encrypt(Kpub, message, debug=False):
 	p, alfa, B = Kpub
 	a = randint(0, p) # = 4
-	# Ephemeral key calculation ->      Ke = (alfa^a)mod(p)
+	# Ephemeral key calculation ->      privKey = (alfa^r)mod(p)
 	Ke = pow(alfa, a, p)
-	# Shared key calculation ->         K = (B^a)mod(p)
+	# Shared key calculation ->         encryptKey = (B^r)mod(p)
 	K = pow(B,a,p)
-	# Encrypted message calculation ->  y = (x*K)mod(p)
+	# Encrypted message calculation ->  cipher = (encryptKey*p)mod(p)
 	y = (message*K) % p
 	# Bob sends the ephemeral key and the encrypted message (Ke, y)
 	sent_values = (Ke, y)
@@ -51,9 +51,9 @@ def encrypt(Kpub, message, debug=False):
 def decrypt(Kpriv, encrypted_message, debug=False):
 	p, alfa, b = Kpriv
 	Ke, y = encrypted_message
-	# Shared key calculation ->         K = (Ke^b)mod(p)
+	# Shared key calculation ->         sharedKey = (publicKey^s)mod(p)
 	K = pow(Ke,b,p)
-	# Decrypted message calculation ->  x = (y*k^(-1))mod(p)
+	# Decrypted message calculation ->  decryptKey = (p * (sharedKey^(-1)) mod(p)
 	x = (y*inverse(K, p)) % p
 	if debug:
 		print ("Private key:             (" + str(p) + "," + str(alfa) + "," + str(b) + ")" )
